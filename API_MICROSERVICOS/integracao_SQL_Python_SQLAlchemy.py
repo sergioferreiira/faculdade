@@ -1,8 +1,9 @@
+
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 
 #quero usar o banco de dados nesse arquivo, usando o formato sqlite
-engine = create_engine('sqlite:///biblioteca.db')
+engine = create_engine('sqlite:///C:\\Users\\Sergio Ferreira\\Desktop\\faculdade\\biblioteca.db')
 
 #mas se quisesse uma solução mais robusta, poderia
 #usar mudando o código muito pouco
@@ -92,14 +93,58 @@ def consulta_aluno(id_aluno):
 #1b) Crie uma função todos_alunos que retorna um lista com um dicionario
 # para cada aluno
 
+def todos_alunos():
+    with engine.connect() as con:   #conectar ao banco de dados 
+        sql_consulta = text ("SELECT * FROM Aluno")
+        rs = con.execute(sql_consulta)
+        resultados = []
+        while True:
+            result = rs.fetchone()
+            if result == None:
+                break
+            d_result = dict(result)
+            resultados.append[d_result]
+        return resultados
+
 #1c) Crie uma função todos_livros que retorna um lista com um dicionario
 # para cada livro
+
+def todos_livros():
+    with engine.connect() as con:   #conectar ao banco de dados 
+        sql_consulta = text ("SELECT * FROM Livros")
+        rs = con.execute(sql_consulta)
+        resultados = []
+        while True:
+            result = rs.fetchone()
+            if result == None:
+                break
+            d_result = dict(result)
+            resultados.append[d_result]
+        return resultados
 
 # 2) Crie uma função cria livro que recebe os dados de um livro (id e descrição)
 # e o adiciona no banco de dados
 
+def cria_livro(id, descricao):
+    with engine.connect() as con:   #conectar ao banco de dados 
+        sql_crialivro = text ("""
+            INSERT INTO Livro(id_livro, descricao)
+            VALUES(:id_livro, :desc_livro)
+        """)
+        con.execute(sql_crialivro, id_livro = id , desc_livro = descricao )
+        return {"id_livro": id, "descricao": descricao}
+
 # 3) Crie uma função empresta_livro, que recebe a id de um livro, a id de um aluno
 # e marca o livro como emprestado pelo aluno
+def empresta_livro(id):
+    with engine.connect() as con:   #conectar ao banco de dados 
+        busca_livro = text ("""
+            SELECT * FROM Livro WHERE id_livro = :id_livro
+        """)
+        rs = con.execute(busca_livro)
+        
+        con.execute(busca_livro, id_livro = id )
+        return {"id_livro": id, "descricao": descricao}
 
 
 # 4) Crie uma função devolve_livro, que recebe a id de um livro, e marca o livro
@@ -110,3 +155,6 @@ def consulta_aluno(id_aluno):
 
 # 6) Crie uma função livros_do_aluno, recebe o nome do aluno e devolve a lista de todos
 # os livros que estão com o aluno no momento
+
+
+print(todos_alunos())
