@@ -13,7 +13,7 @@ import pyodbc
 #  aqui e o formato solicitado pelo pyodbc para uma conexao local
 dados_conexao = (
     "Driver={SQL Server};"
-    "Server={DESKTOP-1STOELQ};"
+    "Server={DESKTOP-1xxxxxQ};"
     "Database=Estudos;"
 )
 
